@@ -127,7 +127,7 @@ function fetchTrackData(uuid) {
 		Object.keys(platforms).forEach(p => {
 			const btn = document.getElementById(p);
 
-			if (data.streaming[p]) {
+			if (data.streaming && p in data.streaming) {
 				btn.href = platforms[p] + data.streaming[p];
 				btn.style.opacity = '1';
 				btn.style.pointerEvents = 'auto';
