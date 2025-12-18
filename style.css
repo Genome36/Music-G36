@@ -1,0 +1,139 @@
+
+*:focus {
+	outline: none;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
+
+html,
+body {
+	font-family: sans-serif;
+	overflow: hidden;
+
+	width: 100%;
+	height: 100%;
+
+	min-width: 350px;
+
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	display: flex;
+
+	height: 100%;
+	padding: 20px;
+
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+#background,
+#cover {
+	background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf);
+	background-size: cover;
+	background-position: center;
+}
+
+#background {
+	z-index: -1;
+	position: fixed;
+	top: -40px;
+	left: -40px;
+
+	width: calc(100% + 80px);
+	height: calc(100% + 80px);
+
+	filter: blur(20px) brightness(0.6);
+	transition: background 0.4s ease;
+}
+
+#cover {
+	width: 80vw;
+	height: 80vw;
+
+	max-width: 350px;
+	max-height: 350px;
+
+	margin-bottom: 20px;
+	border-radius: 15px;
+
+	transition: background-image 0.4s ease;
+
+	box-shadow: 0 0 20px #282828C8;
+}
+
+.info {
+	margin-bottom: 20px;
+}
+
+#title,
+#artist {
+	height: 20px;
+	width: 200px;
+
+	margin: 5px auto;
+
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.buttons {
+	display: flex;
+	gap: 15px;
+}
+
+.btn {
+	display: flex;
+	pointer-events: none;
+
+	width: 80px;
+	height: 80px;
+
+	border-radius: 50%;
+
+	background-size: 100%;
+	background-position: center;
+
+	transition: background 0.4s ease, transform 0.2s ease;
+	opacity: 0.25;
+
+	color: white;
+	font-weight: bold;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+body.error .btn {
+	opacity: 0;
+}
+
+.btn:hover {
+	transform: scale(1.05);
+}
+
+.btn:active {
+	transform: scale(0.9);
+}
+
+.btn#sptf {
+	background-image: url("services/spotify.jpg");
+}
+
+.btn#ytm {
+	background-image: url("services/yt-music.jpg");
+}
+
+.btn#scld {
+	background-image: url("services/soundcloud.jpg");
+}
