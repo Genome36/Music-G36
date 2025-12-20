@@ -72,6 +72,40 @@ function fetchTrackData(uuid) {
 }
 
 
+async function loadLatestRelease(current) {
+	try {
+		const uuid = (await fetch('/tracks/latest').then(r => r.text())).trim();
+		if (! uuid) return;
+
+		// same
+		if (uuid == current) return;
+
+		const meta = await fetchTrackData(uuid);
+
+		const title = meta?.track?.title ?? '';
+
+		// 3) Build card
+		const card = document.getElementById('latest');
+		card.innerHTML = `
+			<img src="tracks/${uuid}/watermarked.jpg" alt="">
+			<div class="text">
+				<div class="title">${title}</div>
+				<div class="subtitle">Latest release</div>
+			</div>
+		`;
+
+		card.onclick = () => {
+			window.location.href = `/?uuid=${uuid}`;
+		};
+
+		card.classList.remove('hidden');
+
+	} catch (err) {
+		console.warn('No latest release found', err);
+	}
+}
+
+
 // Main
 (async () => {
 	const params = getQueryParams();
@@ -115,20 +149,22 @@ function fetchTrackData(uuid) {
 
 	// Set metadata and services
 	fetchTrackData(params.uuid)
-	.then(data => {
+	.then(meta => {
+		loadLatestRelease(meta.track.uuid);
+
 		// Set title & artist
-		title.textContent  = data.track.title  || 'Unknown Title';
-		artist.textContent = data.track.artist || 'Genome36';
+		title.textContent  = meta.track.title  || 'Unknown Title';
+		artist.textContent = meta.track.artist || 'Genome36';
 
 		// set page title
-		document.title = data.track.title  || 'Unknown Title';
+		document.title = meta.track.title  || 'Unknown Title';
 
 		// Set platform buttons
 		Object.keys(platforms).forEach(p => {
 			const btn = document.getElementById(p);
 
-			if (data.streaming && p in data.streaming) {
-				btn.href = platforms[p] + data.streaming[p];
+			if (meta.streaming && p in meta.streaming) {
+				btn.href = platforms[p] + meta.streaming[p];
 				btn.style.opacity = '1';
 				btn.style.pointerEvents = 'auto';
 

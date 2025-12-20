@@ -1,4 +1,8 @@
 
+/*--------------------------------------------------*/
+/*	OVERRIDES
+/*--------------------------------------------------*/
+
 *:focus {
 	outline: none;
 }
@@ -10,6 +14,31 @@
 	    -ms-user-select: none;
 	        user-select: none;
 }
+
+.hidden {
+	display: none !important;
+}
+
+body.error .services .btn {
+	opacity: 0;
+}
+
+.link {
+	cursor: pointer;
+	transition: background 0.4s ease, transform 0.2s ease;
+}
+
+.link:hover {
+	transform: scale(1.05);
+}
+
+.link:active {
+	transform: scale(0.9);
+}
+
+/*--------------------------------------------------*/
+/*	GENERAL
+/*--------------------------------------------------*/
 
 html,
 body {
@@ -37,11 +66,16 @@ body {
 	text-align: center;
 }
 
+.container > *:nth-child(n+2) {
+	margin-top: 20px;
+}
+
 #background,
 #cover {
 	background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf);
 	background-size: cover;
 	background-position: center;
+	transition: background 0.4s ease;
 }
 
 #background {
@@ -54,7 +88,6 @@ body {
 	height: calc(100% + 80px);
 
 	filter: blur(20px) brightness(0.6);
-	transition: background 0.4s ease;
 }
 
 #cover {
@@ -64,16 +97,8 @@ body {
 	max-width: 350px;
 	max-height: 350px;
 
-	margin-bottom: 20px;
 	border-radius: 15px;
-
-	transition: background-image 0.4s ease;
-
 	box-shadow: 0 0 20px #282828C8;
-}
-
-.info {
-	margin-bottom: 20px;
 }
 
 #title,
@@ -87,14 +112,17 @@ body {
 	font-weight: bold;
 }
 
-.buttons {
+/*--------------------------------------------------*/
+/*	SERVICES
+/*--------------------------------------------------*/
+
+.services {
 	display: flex;
 	gap: 15px;
 }
 
 .btn {
 	display: flex;
-	pointer-events: none;
 
 	width: 80px;
 	height: 80px;
@@ -103,8 +131,6 @@ body {
 
 	background-size: 100%;
 	background-position: center;
-
-	transition: background 0.4s ease, transform 0.2s ease;
 	opacity: 0.25;
 
 	color: white;
@@ -112,18 +138,6 @@ body {
 	align-items: center;
 	justify-content: center;
 	text-decoration: none;
-}
-
-body.error .btn {
-	opacity: 0;
-}
-
-.btn:hover {
-	transform: scale(1.05);
-}
-
-.btn:active {
-	transform: scale(0.9);
 }
 
 .btn#sptf {
@@ -136,4 +150,55 @@ body.error .btn {
 
 .btn#scld {
 	background-image: url("services/soundcloud.jpg");
+}
+
+/*--------------------------------------------------*/
+/*	LATEST
+/*--------------------------------------------------*/
+
+#latest {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+
+	width: 310px;
+
+	padding: 10px;
+	border-radius: 5px;
+
+	background: rgba(0,0,0,0.35);
+	backdrop-filter: blur(10px);
+
+	transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#latest:hover {
+	background: rgba(0,0,0,0.45);
+}
+
+#latest img {
+	width: 64px;
+	height: 64px;
+
+	border-radius: 3px;
+	object-fit: cover;
+}
+
+#latest .text {
+	display: flex;
+	flex-direction: column;
+
+	color: #FFFFFF;
+	line-height: 18px;
+	text-align: left;
+}
+
+#latest .title {
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+#latest .subtitle {
+	font-size: 0.75rem;
+	opacity: 0.75;
 }
