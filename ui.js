@@ -7,6 +7,14 @@ const platforms = {
 };
 
 
+const start = Date.now();
+const sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+	const r = Math.random() * 16 | 0;
+	const v = c === 'x' ? r : (r & 0x3 | 0x8);
+	return v.toString(16);
+});
+
+
 // Utility to parse query params
 function getQueryParams() {
 	const params = {};
@@ -17,6 +25,22 @@ function getQueryParams() {
 	});
 
 	return params;
+}
+
+
+window.send = (evt, extra = {}) => {
+	const img = new Image();
+	img.src = "https://genome36.com/pxl?" + new URLSearchParams({
+		evt,
+		sid,
+		p: location.href,
+		ts: Date.now(),
+		vw: innerWidth,
+		vh: innerHeight,
+		lang: navigator.language || '',
+		vis: document.visibilityState || '',
+		...extra
+	});
 }
 
 
@@ -106,6 +130,23 @@ async function loadLatestRelease(current) {
 }
 
 
+// engagement
+window.addEventListener('beforeunload', () => {
+	window.send('engage', { eng: Date.now() - start });
+});
+
+
+// interaction
+document.querySelectorAll('.link').forEach(btn => {
+	btn.addEventListener('click', () => {
+		window.send('outbound', {
+			eng: Date.now() - start,
+			act: btn.id,
+		});
+	});
+});
+
+
 // Main
 (async () => {
 	const params = getQueryParams();
@@ -188,4 +229,7 @@ async function loadLatestRelease(current) {
 
 		container.prepend(priorityBtn);
 	}
+
+	// page view
+	window.send('view');
 })();
