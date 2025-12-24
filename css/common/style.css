@@ -1,0 +1,44 @@
+
+/*--------------------------------------------------*/
+/*	GENERAL
+/*--------------------------------------------------*/
+
+*:focus {
+	outline: none;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
+
+	-webkit-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
+
+html,
+body {
+	font-family: sans-serif;
+	overflow: hidden;
+
+	min-width: 350px;
+
+	margin: 0;
+	padding: 0;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.link {
+	cursor: pointer;
+	transition: background 0.4s ease, transform 0.2s ease;
+}
+
+.link:hover {
+	transform: scale(1.05);
+}
+
+.link:active {
+	transform: scale(0.9);
+}

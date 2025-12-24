@@ -50,7 +50,7 @@ window.send = (evt, extra = {}) => {
 function fetchTrackData(uuid) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await fetch(`tracks/${uuid}/metadata.ini`);
+			const response = await fetch(`/tracks/${uuid}/metadata.ini`);
 
 			if (! response.ok) {
 				throw new Error(`Failed to fetch metadata.ini for ${uuid}`);
@@ -113,7 +113,7 @@ async function loadLatestRelease(current) {
 		// 3) Build card
 		const card = document.getElementById('latest');
 		card.innerHTML = `
-			<img src="tracks/${uuid}/watermarked.jpg" alt="">
+			<img src="/tracks/${uuid}/watermarked.jpg" alt="">
 			<div class="text">
 				<div class="title">${title}</div>
 				<div class="subtitle">Latest release</div>
