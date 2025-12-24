@@ -1,39 +1,12 @@
 
+@import url(/css/common/style.css);
+
 /*--------------------------------------------------*/
 /*	OVERRIDES
 /*--------------------------------------------------*/
 
-*:focus {
-	outline: none;
-}
-
-* {
-	-webkit-tap-highlight-color: transparent;
-
-	-webkit-user-select: none;
-	    -ms-user-select: none;
-	        user-select: none;
-}
-
-.hidden {
-	display: none !important;
-}
-
 body.error .services .btn {
 	opacity: 0;
-}
-
-.link {
-	cursor: pointer;
-	transition: background 0.4s ease, transform 0.2s ease;
-}
-
-.link:hover {
-	transform: scale(1.05);
-}
-
-.link:active {
-	transform: scale(0.9);
 }
 
 /*--------------------------------------------------*/
@@ -42,16 +15,8 @@ body.error .services .btn {
 
 html,
 body {
-	font-family: sans-serif;
-	overflow: hidden;
-
 	width: 100%;
 	height: 100%;
-
-	min-width: 350px;
-
-	margin: 0;
-	padding: 0;
 }
 
 .container {
@@ -141,15 +106,15 @@ body {
 }
 
 .btn#sptf {
-	background-image: url("services/spotify.jpg");
+	background-image: url("/services/spotify.jpg");
 }
 
 .btn#ytm {
-	background-image: url("services/yt-music.jpg");
+	background-image: url("/services/yt-music.jpg");
 }
 
 .btn#scld {
-	background-image: url("services/soundcloud.jpg");
+	background-image: url("/services/soundcloud.jpg");
 }
 
 /*--------------------------------------------------*/

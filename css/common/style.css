@@ -1,0 +1,78 @@
+
+/*--------------------------------------------------*/
+/*	GENERAL
+/*--------------------------------------------------*/
+
+*:focus {
+	outline: none;
+}
+
+*, *:before, *:after  {
+	position: relative;
+
+	padding: 0;
+	margin: 0;
+
+	border: 0;
+	outline: 0;
+
+	/*vertical-align: baseline;*/
+	background: transparent;
+
+	font-size: 100%;
+	text-decoration: none;
+	list-style: none;
+
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	    -ms-box-sizing: border-box;
+	     -o-box-sizing: border-box;
+	        box-sizing: border-box;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+	     -moz-user-select: none; /* Old versions of Firefox */
+	      -ms-user-select: none; /* Internet Explorer/Edge */
+	          user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+	-webkit-user-drag: none;
+	 -khtml-user-drag: none;
+	   -moz-user-drag: none;
+	    -ms-user-drag: none;
+	     -o-user-drag: none;
+	        user-drag: none;
+
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	   -moz-tap-highlight-color: rgba(0, 0, 0, 0);
+	    -ms-tap-highlight-color: rgba(0, 0, 0, 0);
+	     -o-tap-highlight-color: rgba(0, 0, 0, 0);
+	       -tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body {
+	font-family: sans-serif;
+
+	min-width: 350px;
+
+	margin: 0;
+	padding: 0;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.link {
+	cursor: pointer;
+	transition: background 0.4s ease, transform 0.2s ease;
+}
+
+.link:hover {
+	transform: scale(1.05);
+}
+
+.link:active {
+	transform: scale(0.9);
+}
