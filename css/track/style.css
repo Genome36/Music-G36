@@ -126,10 +126,10 @@ body {
 }
 
 /*--------------------------------------------------*/
-/*	LATEST
+/*	REDIRECT
 /*--------------------------------------------------*/
 
-#latest {
+#redirect {
 	display: flex;
 	align-items: center;
 	gap: 12px;
@@ -145,33 +145,84 @@ body {
 	transition: transform 0.2s ease, background 0.2s ease;
 }
 
-#latest:hover {
+#redirect::after {
+	z-index: 1;
+	content: " ";
+	position: absolute;
+	top: 34px;
+	right: 34px;
+
+	width: 16px;
+	height: 16px;
+
+	filter: invert(1);
+
+	background-image: url("/services/link.png");
+	background-size: cover;
+	background-position: center;
+}
+
+#redirect:hover {
 	background: rgba(0,0,0,0.45);
 }
 
-#latest img {
+#redirect .cover {
+	position: relative;
 	width: 64px;
 	height: 64px;
 
+	overflow: hidden;
 	border-radius: 3px;
+}
+
+#redirect .cover img {
+	width: 100%;
 	object-fit: cover;
 }
 
-#latest .text {
+#redirect.other .cover img {
+	position: absolute;
+	width: 30px;
+	border-radius: 3px;
+}
+
+#redirect.other .cover img:nth-child(1) {
+	top: 0;
+	left: 0;
+}
+
+#redirect.other .cover img:nth-child(2) {
+	top: 0;
+	right: 0;
+}
+
+#redirect.other .cover img:nth-child(3) {
+	bottom: 0;
+	left: 0;
+}
+
+#redirect.other .cover img:nth-child(4) {
+	bottom: 0;
+	right: 0;
+}
+
+#redirect .text {
 	display: flex;
+
 	flex-direction: column;
+	justify-content: center;
 
 	color: #FFFFFF;
 	line-height: 18px;
 	text-align: left;
 }
 
-#latest .title {
+#redirect .title {
 	font-weight: 600;
 	font-size: 0.95rem;
 }
 
-#latest .subtitle {
+#redirect .subtitle {
 	font-size: 0.75rem;
 	opacity: 0.75;
 }

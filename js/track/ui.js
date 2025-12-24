@@ -122,26 +122,50 @@ async function loadLatestRelease(current) {
 		const uuid = (await fetch('/tracks/latest').then(r => r.text())).trim();
 		if (! uuid) return;
 
-		// same
-		if (uuid == current) return;
+		// Build card
+		const card = document.getElementById('redirect');
 
-		const meta = await fetchTrackData(uuid);
+		// same uuid (show list)
+		if (uuid == current) {
+			card.classList.add("other");
 
-		const title = meta?.track?.title ?? '';
+			card.innerHTML = `
+				<div class="cover">
+					<img src="/tracks/3LiA9B/watermarked.jpg">
+					<img src="/tracks/UMhWwS/watermarked.jpg">
+					<img src="/tracks/DB0di4/watermarked.jpg">
+					<img src="/tracks/WDPnvU/watermarked.jpg">
+				</div>
+				<div class="text">
+					<div class="title">Other releases</div>
+					<div class="subtitle">Loads of emotions</div>
+				</div>
+			`;
 
-		// 3) Build card
-		const card = document.getElementById('latest');
-		card.innerHTML = `
-			<img src="/tracks/${uuid}/watermarked.jpg" alt="">
-			<div class="text">
-				<div class="title">${title}</div>
-				<div class="subtitle">Latest release</div>
-			</div>
-		`;
+			card.onclick = () => {
+				window.location.href = '/list.html';
+			};
 
-		card.onclick = () => {
-			window.location.href = `/?uuid=${uuid}`;
-		};
+		// diff uuid (show latest)
+		} else {
+			const meta = await fetchTrackData(uuid);
+
+			const title = meta?.track?.title ?? '';
+
+			card.innerHTML = `
+				<div class="cover">
+					<img src="/tracks/${uuid}/watermarked.jpg" alt="">
+				</div>
+				<div class="text">
+					<div class="title">${title}</div>
+					<div class="subtitle">Latest release</div>
+				</div>
+			`;
+
+			card.onclick = () => {
+				window.location.href = `/?uuid=${uuid}`;
+			};
+		}
 
 		card.classList.remove('hidden');
 
