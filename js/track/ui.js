@@ -98,6 +98,25 @@ function fetchTrackData(uuid) {
 }
 
 
+function releaseDate(dateStr) {
+	if (! dateStr) return '';
+
+	const date = new Date(dateStr + 'T00:00:00');
+	const day = date.getDate();
+
+	// Determine ordinal suffix
+	const suffix =
+		day % 10 === 1 && day !== 11 ? 'st' :
+		day % 10 === 2 && day !== 12 ? 'nd' :
+		day % 10 === 3 && day !== 13 ? 'rd' : 'th';
+
+	const month = date.toLocaleString('en-US', { month: 'long' });
+	const year = date.getFullYear();
+
+	return `${month} ${day}${suffix}, ${year}`;
+}
+
+
 async function loadLatestRelease(current) {
 	try {
 		const uuid = (await fetch('/tracks/latest').then(r => r.text())).trim();
@@ -159,6 +178,7 @@ document.querySelectorAll('.link').forEach(btn => {
 	// Set title & artist
 	const title  = document.getElementById('title');
 	const artist = document.getElementById('artist');
+	const date = document.getElementById('date');
 
 	// show error
 	function show404 () {
@@ -195,9 +215,10 @@ document.querySelectorAll('.link').forEach(btn => {
 	.then(meta => {
 		loadLatestRelease(meta.track.uuid);
 
-		// Set title & artist
+		// Set title, artist and release date
 		title.textContent  = meta.track.title  || 'Unknown Title';
 		artist.textContent = meta.track.artist || 'Genome36';
+		date.textContent = releaseDate(meta.track.released);
 
 		// set page title
 		document.title = meta.track.title  || 'Unknown Title';
