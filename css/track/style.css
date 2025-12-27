@@ -1,6 +1,12 @@
 
 @import url(/css/common/style.css);
 
+:root {
+	--color-sptf: #1ED761;
+	--color-ytm:  #FF0000;
+	--color-scld: #000000;
+}
+
 /*--------------------------------------------------*/
 /*	OVERRIDES
 /*--------------------------------------------------*/
@@ -104,6 +110,7 @@ body {
 
 	background-size: 100%;
 	background-position: center;
+	background-repeat: no-repeat;
 	opacity: 0.25;
 
 	color: white;
@@ -114,15 +121,21 @@ body {
 }
 
 .btn#sptf {
-	background-image: url("/services/spotify.jpg");
+	background-color: var(--color-sptf);
+	background-image: url("/services/spotify.png");
+	background-size: 95%;
 }
 
 .btn#ytm {
-	background-image: url("/services/yt-music.jpg");
+	background-color: var(--color-ytm);
+	background-image: url("/services/yt-music.png");
+	background-size: 100%;
 }
 
 .btn#scld {
-	background-image: url("/services/soundcloud.jpg");
+	background-color: var(--color-scld);
+	background-image: url("/services/soundcloud.png");
+	background-size: 95%;
 }
 
 /*--------------------------------------------------*/
