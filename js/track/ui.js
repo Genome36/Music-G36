@@ -1,6 +1,7 @@
 
 
 const platforms = {
+	'aplm': 'https://music.apple.com/us/song/',
 	'sptf': 'https://open.spotify.com/track/',
 	'ytm': 'https://music.youtube.com/watch?v=',
 	'scld': 'https://soundcloud.com/genome36/',

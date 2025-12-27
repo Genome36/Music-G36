@@ -5,6 +5,7 @@
 	--color-sptf: #1ED761;
 	--color-ytm:  #FF0000;
 	--color-scld: #000000;
+	--color-aplm: #FFFFFF;
 }
 
 /*--------------------------------------------------*/
@@ -103,8 +104,8 @@ body {
 .btn {
 	display: flex;
 
-	width: 80px;
-	height: 80px;
+	width: 64px;
+	height: 64px;
 
 	border-radius: 50%;
 
@@ -139,6 +140,13 @@ body {
 	background-color: var(--color-scld);
 	background-image: url("/services/soundcloud.png");
 	background-size: 95%;
+}
+
+.btn#aplm {
+	background-color: var(--color-aplm);
+	background-image: url("/services/apple-music.png");
+	background-size: 50%;
+	background-position: 47.5% 45%;
 }
 
 /*--------------------------------------------------*/
