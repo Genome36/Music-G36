@@ -275,6 +275,52 @@ document.querySelectorAll('.link').forEach(btn => {
 		container.prepend(priorityBtn);
 	}
 
+	// share button
+	const share = document.getElementById('share');
+	share.addEventListener('click', async () => {
+		const ref_url = window.location.href + "&ref=share";
+
+		const shareData = {
+			title: document.title,
+			text: 'Check out this track',
+			url: ref_url,
+		};
+
+		if (navigator.share) {
+			try {
+				await navigator.share(shareData);
+				window.send("share");
+
+			} catch (err) {
+				// User cancelled -> ignore
+				console.debug('Share cancelled', err);
+			}
+
+			return;
+		}
+
+		// Fallback
+		const input = document.createElement('input');
+		input.value = ref_url;
+
+		document.body.appendChild(input);
+
+		input.select();
+		input.setSelectionRange(0, 99999);
+
+		try {
+			document.execCommand('copy');
+
+		} catch (err) {
+			alert('Tap and hold to copy the URL');
+		}
+
+		document.body.removeChild(input);
+
+		window.send("fallbackShare");
+		return;
+	});
+
 	// page view
 	window.send('view');
 })();
