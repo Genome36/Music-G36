@@ -12,9 +12,6 @@
 /*	OVERRIDES
 /*--------------------------------------------------*/
 
-body.error .services .btn {
-	opacity: 0;
-}
 
 /*--------------------------------------------------*/
 /*	GENERAL
@@ -96,7 +93,7 @@ body {
 /*	SERVICES
 /*--------------------------------------------------*/
 
-.services {
+#services {
 	display: flex;
 	gap: 15px;
 }
@@ -120,8 +117,8 @@ body {
 	text-decoration: none;
 }
 
-.services .btn {
-	opacity: 0.25;
+#services .btn {
+	pointer-events: auto;
 }
 
 .btn#sptf {

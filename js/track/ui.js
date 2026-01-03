@@ -180,23 +180,13 @@ window.addEventListener('beforeunload', () => {
 });
 
 
-// interaction
-document.querySelectorAll('.link').forEach(btn => {
-	btn.addEventListener('click', () => {
-		window.send('outbound', {
-			eng: Date.now() - start,
-			act: btn.id,
-		});
-	});
-});
-
-
 // Main
 (async () => {
 	const params = getQueryParams();
 
 	const cover = document.getElementById('cover');
 	const back = document.getElementById('background');
+	const serv = document.getElementById('services');
 
 	// Set title & artist
 	const title  = document.getElementById('title');
@@ -248,17 +238,25 @@ document.querySelectorAll('.link').forEach(btn => {
 
 		// Set platform buttons
 		Object.keys(platforms).forEach(p => {
-			const btn = document.getElementById(p);
-
 			if (meta.streaming
 			&&  p in meta.streaming
 			&&  meta.streaming[p].trim() !== "") {
+				const btn = document.createElement("A");
+
+				btn.id = p;
+				btn.className = "btn link";
+
 				btn.href = platforms[p] + meta.streaming[p];
-				btn.style.opacity = '1';
 				btn.style.pointerEvents = 'auto';
 
-			} else {
-				btn.style.display = 'none';
+				btn.addEventListener('click', () => {
+					window.send('outbound', {
+						eng: Date.now() - start,
+						act: btn.id,
+					});
+				});
+
+				serv.append(btn);
 			}
 		});
 	})
