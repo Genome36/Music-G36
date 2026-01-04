@@ -49,7 +49,10 @@ window.send = (evt, extra = {}) => {
 function fetchTrackData(uuid) {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const response = await fetch(`/tracks/${uuid}/metadata.ini`);
+			const response = await fetch(
+				`/tracks/${uuid}/metadata.ini`,
+				{ cache: 'reload' }
+			);
 
 			if (! response.ok) {
 				throw new Error(`Failed to fetch metadata.ini for ${uuid}`);
@@ -118,7 +121,11 @@ function releaseDate(dateStr) {
 
 async function loadLatestRelease(current) {
 	try {
-		const uuid = (await fetch('/tracks/latest').then(r => r.text())).trim();
+		const uuid = (await fetch(
+			'/tracks/latest',
+			{ cache: 'reload' }
+		).then(r => r.text())).trim();
+
 		if (! uuid) return;
 
 		// Build card
