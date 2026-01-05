@@ -30,8 +30,7 @@ function getQueryParams() {
 
 
 window.send = (evt, extra = {}) => {
-	const img = new Image();
-	img.src = "https://genome36.com/pxl?" + new URLSearchParams({
+	const url = "https://genome36.com/pxl?" + new URLSearchParams({
 		evt,
 		sid,
 		p: location.href,
@@ -42,6 +41,16 @@ window.send = (evt, extra = {}) => {
 		vis: document.visibilityState || '',
 		...extra
 	});
+
+	if (navigator.sendBeacon) {
+		console.log("bcn");
+		navigator.sendBeacon(url);
+
+	} else {
+		console.log("img");
+		const img = new Image();
+		img.src = url;
+	}
 }
 
 
@@ -254,13 +263,22 @@ window.addEventListener('beforeunload', () => {
 				btn.className = "btn link";
 
 				btn.href = platforms[p] + meta.streaming[p];
-				btn.style.pointerEvents = 'auto';
+				btn.target = "_blank";
+				btn.rel = "noopener noreferrer";
 
-				btn.addEventListener('click', () => {
+				btn.setAttribute("data-open", "external");
+
+				btn.addEventListener('click', (event) => {
+					event.preventDefault();
+
 					window.send('outbound', {
 						eng: Date.now() - start,
 						act: btn.id,
 					});
+
+					setTimeout( () => {
+						window.location.href = btn.href;
+					}, 120);
 				});
 
 				serv.append(btn);
