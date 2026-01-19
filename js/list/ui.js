@@ -45,6 +45,11 @@ fetch(CSV_URL)
 
 			const coverPath = `/tracks/${track["uuid"]}/watermarked.jpg`;
 
+			let title = track.title;
+			if (["lb9x1S", "poGKhK", "WfXbGy"].indexOf(track.uuid) > -1) {
+				title = track.title.replace('(', "<br />(");
+			}
+
 			a.innerHTML = `
 				<img
 					class="cover"
@@ -53,10 +58,10 @@ fetch(CSV_URL)
 				/>
 				<div class="info">
 					<div class="title">
-						${track["title"]}
+						${title}
 					</div>
 
-					<div class="duration">
+					<div class="duration tag">
 						${formatDuration(track["duration"])}
 					</div>
 				</div>
