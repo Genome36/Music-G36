@@ -89,7 +89,14 @@ body {
 
 	transition: opacity 0.4s ease;
 	pointer-events: none;
-	animation: reveal 1.5s ease forwards;
+}
+
+body.loaded #shade {
+	animation: reveal 1s ease forwards;
+}
+
+body.unload #shade {
+	animation: reveal 1s ease backwards;
 }
 
 @keyframes reveal {

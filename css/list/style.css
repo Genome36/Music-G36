@@ -5,6 +5,10 @@
 /*	OVERRIDES
 /*--------------------------------------------------*/
 
+#shade {
+	animation: reveal 1.25s ease forwards;
+}
+
 #background {
 	z-index: -1;
 	position: fixed;

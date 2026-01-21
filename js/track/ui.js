@@ -263,6 +263,10 @@ async function loadLatestRelease(current) {
 	.catch(err => {
 		console.warn('Failed to load track', err);
 		show404();
+	})
+
+	.finally ( () => {
+		document.body.classList.add('loaded');
 	});
 
 	// Priority reordering
