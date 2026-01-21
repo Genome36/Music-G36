@@ -1,4 +1,10 @@
 
+// ES6
+//'use strict';
+
+
+import { pxl } from '/js/pxl.js';
+
 
 const platforms = {
 	'aplm': 'https://music.apple.com/us/song/',
@@ -6,14 +12,6 @@ const platforms = {
 	'ytm': 'https://music.youtube.com/watch?v=',
 	'scld': 'https://soundcloud.com/genome36/',
 };
-
-
-const start = Date.now();
-const sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-	const r = Math.random() * 16 | 0;
-	const v = c === 'x' ? r : (r & 0x3 | 0x8);
-	return v.toString(16);
-});
 
 
 // Utility to parse query params
@@ -26,31 +24,6 @@ function getQueryParams() {
 	});
 
 	return params;
-}
-
-
-window.send = (evt, extra = {}) => {
-	const url = "https://genome36.com/pxl?" + new URLSearchParams({
-		evt,
-		sid,
-		p: location.href,
-		ts: Date.now(),
-		vw: innerWidth,
-		vh: innerHeight,
-		lang: navigator.language || '',
-		vis: document.visibilityState || '',
-		...extra
-	});
-
-	if (navigator.sendBeacon) {
-		console.log("bcn");
-		navigator.sendBeacon(url);
-
-	} else {
-		console.log("img");
-		const img = new Image();
-		img.src = url;
-	}
 }
 
 
@@ -190,10 +163,6 @@ async function loadLatestRelease(current) {
 }
 
 
-// engagement
-window.addEventListener('beforeunload', () => {
-	window.send('engage', { eng: Date.now() - start });
-});
 
 
 // Main
@@ -269,16 +238,21 @@ window.addEventListener('beforeunload', () => {
 				btn.setAttribute("data-open", "external");
 
 				btn.addEventListener('click', (event) => {
-					event.preventDefault();
+					// Fire pixel tracking immediately
+					pxl.outbound(btn.id);
 
-					window.send('outbound', {
-						eng: Date.now() - start,
-						act: btn.id,
-					});
+					try {
+						console.warn("clicked", btn.id);
+						event.preventDefault();
 
-					setTimeout( () => {
-						window.location.href = btn.href;
-					}, 120);
+						// Redirect after animation
+						setTimeout( () => {
+							window.open(btn.href, '_blank', 'noopener');
+						}, 1000);
+
+					} catch (err) {
+						console.error('btn press', err);
+					}
 				});
 
 				serv.append(btn);
@@ -313,7 +287,7 @@ window.addEventListener('beforeunload', () => {
 		if (navigator.share) {
 			try {
 				await navigator.share(shareData);
-				window.send("share");
+				pxl.share();
 
 			} catch (err) {
 				// User cancelled -> ignore
@@ -341,10 +315,11 @@ window.addEventListener('beforeunload', () => {
 
 		document.body.removeChild(input);
 
-		window.send("fallbackShare");
+		pxl.share(true);
 		return;
 	});
 
-	// page view
-	window.send('view');
+	setTimeout( () => {
+		pxl.debug();
+	}, 1500);
 })();
