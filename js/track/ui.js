@@ -163,6 +163,35 @@ async function loadLatestRelease(current) {
 }
 
 
+function expandElement (btn) {
+	// make copy
+	const copy = btn.cloneNode(true);
+
+	// Get button position and size
+	const rect = btn.getBoundingClientRect();
+
+	// Apply initial fixed position matching the button
+	copy.style.zIndex = 9999;
+	copy.style.position = 'fixed';
+	copy.style.top = rect.top + 'px';
+	copy.style.left = rect.left + 'px';
+	copy.style.width = rect.width + 'px';
+	copy.style.height = rect.height + 'px';
+
+	// add copy
+	document.body.appendChild(copy);
+
+	// Trigger reflow so the browser registers the initial size
+	copy.offsetHeight;
+
+	// Expand over all available space
+	copy.style.transition = 'all 0.250s linear';
+	copy.style.top = 0;
+	copy.style.left = 0;
+	copy.style.width = '100vw';
+	copy.style.height = '100vh';
+	copy.style.borderRadius = 0;
+}
 
 
 // Main
@@ -237,6 +266,12 @@ async function loadLatestRelease(current) {
 
 				btn.setAttribute("data-open", "external");
 
+				// reset button
+				document.addEventListener('visibilitychange', () => {
+					btn.style.cssText = '';
+				});
+
+				// expand button
 				btn.addEventListener('click', (event) => {
 					// Fire pixel tracking immediately
 					pxl.outbound(btn.id);
@@ -244,6 +279,8 @@ async function loadLatestRelease(current) {
 					try {
 						console.warn("clicked", btn.id);
 						event.preventDefault();
+
+						expandElement(btn);
 
 						// Redirect after animation
 						setTimeout( () => {
