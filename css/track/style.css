@@ -121,6 +121,7 @@ body {
 	pointer-events: auto;
 }
 
+
 .btn#sptf {
 	background-color: var(--color-sptf);
 	background-image: url("/services/spotify.png");
