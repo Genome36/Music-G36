@@ -39,12 +39,45 @@ class trk {
 	}
 
 
-	#id () {
+	#uuid () {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
 			const r = Math.random() * 16 | 0;
 			const v = c === 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
 		});
+	}
+
+
+	#id () {
+		const url = new URL(window.location.href);
+
+		// from URL
+		let sid = url.searchParams.get('sid');
+		if (sid) {
+			url.searchParams.delete('sid');
+			history.replaceState({}, '', url);
+
+			sessionStorage.setItem('sid', sid);
+			localStorage.setItem('sid', sid);
+			return sid;
+		}
+
+		// sessionStorage
+		sid = sessionStorage.getItem('sid');
+		if (sid) return sid;
+
+		// localStorage
+		sid = localStorage.getItem('sid');
+		if (sid) {
+			sessionStorage.setItem('sid', sid);
+			return sid;
+		}
+
+		// create new
+		sid = this.#uuid();
+		sessionStorage.setItem('sid', sid);
+		localStorage.setItem('sid', sid);
+		return sid;
 	}
 
 
@@ -226,6 +259,13 @@ class trk {
 		this.#send('heartbeat', {
 			eng: Date.now() - this.#start
 		});
+	}
+
+
+	redirect (url) {
+		const u = new URL(url, window.location.origin);
+		u.searchParams.set('sid', this.#sid);
+		window.location.href = u.toString();
 	}
 
 
