@@ -131,7 +131,7 @@ async function loadLatestRelease(current) {
 			`;
 
 			card.onclick = () => {
-				window.location.href = '/list.html';
+				pxl.redirect('/list.html');
 			};
 
 		// diff uuid (show latest)
@@ -151,7 +151,7 @@ async function loadLatestRelease(current) {
 			`;
 
 			card.onclick = () => {
-				window.location.href = `/?uuid=${uuid}`;
+				pxl.redirect(`/?uuid=${uuid}`);
 			};
 		}
 
