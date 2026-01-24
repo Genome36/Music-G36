@@ -13,6 +13,7 @@ class trk {
 	#sid;
 
 	#original = {};
+	#logSequence = 0;
 
 	// view
 	#viewed = false;
@@ -183,8 +184,9 @@ class trk {
 
 	#console (lvl, args) {
 		const entry = {
-			lvl,
 			ts: Date.now(),
+			seq: this.#logSequence,
+			lvl,
 			msg: args.map(v => {
 				if (v instanceof Error) return v.stack;
 				if (typeof v === "object") return JSON.stringify(v, null, 2);
@@ -193,6 +195,7 @@ class trk {
 		};
 
 		this.#send('log', { n: JSON.stringify(entry) });
+		this.#logSequence++;
 	}
 
 
