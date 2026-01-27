@@ -194,7 +194,7 @@ class trk {
 			}).join(" "),
 		};
 
-		this.#send('log', { n: JSON.stringify(entry) });
+		this.#send('l', { n: JSON.stringify(entry) });
 		this.#logSequence++;
 	}
 
@@ -215,27 +215,29 @@ class trk {
 		});
 
 		if (fd && navigator.sendBeacon) {
-			navigator.sendBeacon(url + '&req=bcn', fd);
+			navigator.sendBeacon(url + '&r=bcn', fd);
 
 		} else {
 			const img = new Image();
-			img.src = url + '&req=img';
+			img.src = url + '&r=img';
 		}
 	}
 
 
 	reach () {
-		this.#send('reach');
+		this.#send('r');
 	}
 
 
 	view () {
-		this.#send('view');
+		this.#send('v', {
+			eng: Date.now() - this.#start
+		});
 	}
 
 
 	engaged () {
-		this.#send('engage', {
+		this.#send('e', {
 			eng: Date.now() - this.#start
 		});
 	}
@@ -243,7 +245,7 @@ class trk {
 
 	outbound (action) {
 		this.#navigating = true;
-		this.#send('outbound', {
+		this.#send('o', {
 			act: action,
 			eng: Date.now() - this.#start
 		});
@@ -251,7 +253,7 @@ class trk {
 
 
 	share (fallback = false) {
-		const event = (fallback) ? 'fallbackShare' : 'share';
+		const event = (fallback) ? 'fs' : 's';
 		this.#send(event, {
 			eng: Date.now() - this.#start
 		});
@@ -259,7 +261,7 @@ class trk {
 
 
 	heartbeat () {
-		this.#send('heartbeat', {
+		this.#send('h', {
 			eng: Date.now() - this.#start
 		});
 	}
@@ -300,7 +302,7 @@ class trk {
 			out.toBlob( blob => {
 				const fd = new FormData();
 				fd.append('debug', blob, 'dbg.jpg');
-				this.#send('debug', { fd });
+				this.#send('d', { fd });
 			}, 'image/jpeg', 0.6);
 		});
 	}
