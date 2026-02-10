@@ -10,6 +10,7 @@ class trk {
 
 	#debug = true;
 
+	#nid;
 	#sid;
 
 	#original = {};
@@ -29,7 +30,8 @@ class trk {
 
 	constructor () {
 		this.#start = Date.now();
-		this.#sid = this.#id();
+		this.#nid = this.#nav_id();
+		this.#sid = this.#ses_id();
 
 		this.#bindControls();
 		this.#bindVisibility();
@@ -49,7 +51,14 @@ class trk {
 	}
 
 
-	#id () {
+	#nav_id () {
+		return (Date.now() * Math.random())
+			.toString(36)
+			.slice(0, 6);
+	}
+
+
+	#ses_id () {
 		const url = new URL(window.location.href);
 
 		// from URL
@@ -204,6 +213,7 @@ class trk {
 
 		const url = "https://genome36.com/pxl?" + new URLSearchParams({
 			evt,
+			nid: this.#nid,
 			sid: this.#sid,
 			p: location.href,
 			ts: Date.now(),
