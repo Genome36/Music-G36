@@ -269,26 +269,33 @@ function expandElement (btn) {
 				// reset button
 				document.addEventListener('visibilitychange', () => {
 					btn.style.cssText = '';
+					btn.toggleAttribute("disabled", false);
 				});
 
 				// expand button
 				btn.addEventListener('click', (event) => {
+					// cancel if disabled
+					event.preventDefault();
+					if (btn.hasAttribute('disabled')) return false;
+
 					// Fire pixel tracking immediately
 					pxl.outbound(btn.id);
 
 					try {
 						console.warn("clicked", btn.id);
-						event.preventDefault();
 
+						btn.toggleAttribute("disabled", true);
 						expandElement(btn);
 
 						// Redirect after animation
 						setTimeout( () => {
 							window.open(btn.href, '_blank', 'noopener');
+							btn.toggleAttribute("disabled", false);
 						}, 1000);
 
 					} catch (err) {
 						console.error('btn press', err);
+						btn.toggleAttribute("disabled", false);
 					}
 				});
 

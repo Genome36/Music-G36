@@ -67,11 +67,11 @@ body {
 	transition: background 0.4s ease, transform 0.2s ease;
 }
 
-.link:hover {
+.link:not([disabled]):hover {
 	transform: scale(1.05);
 }
 
-.link:active {
+.link:not([disabled]):active {
 	transform: scale(0.9);
 }
 

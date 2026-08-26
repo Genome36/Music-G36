@@ -147,6 +147,9 @@ body {
 	background-color: var(--color-aplm);
 	background-image: url("/services/apple-music.png");
 	background-size: 50%;
+}
+
+.btn#aplm:not([disabled]) {
 	background-position: 47.5% 45%;
 }
 
