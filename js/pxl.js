@@ -278,9 +278,25 @@ class trk {
 
 
 	redirect (url) {
-		const u = new URL(url, window.location.origin);
-		u.searchParams.set('sid', this.#sid);
-		window.location.href = u.toString();
+		const current = new URL(window.location.href);
+		const target  = new URL(url, window.location.origin);
+		const merged  = new URL(target.pathname, window.location.origin);
+
+		// add current params
+		current.searchParams.forEach( (value, key) => {
+			merged.searchParams.set(key, value);
+		});
+
+		// override with params
+		target.searchParams.forEach( (value, key) => {
+			merged.searchParams.set(key, value);
+		});
+
+		// add sid
+		merged.searchParams.set('sid', this.#sid);
+
+		// redirect
+		window.location.href = merged.toString();
 	}
 
 

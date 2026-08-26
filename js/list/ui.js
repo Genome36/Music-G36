@@ -48,7 +48,10 @@ fetch(CSV_URL)
 
 			a.id = track["uuid"];
 			a.className = "track link";
-			a.href = `/?uuid=${track["uuid"]}`;
+
+			a.onclick = () => {
+				pxl.redirect(`/?uuid=${track["uuid"]}`);
+			};
 
 			const coverPath = `/tracks/${track["uuid"]}/watermarked.jpg`;
 
