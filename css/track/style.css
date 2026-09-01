@@ -58,6 +58,7 @@ body {
 }
 
 #cover {
+	display: block;
 	width: auto;
 	height: 80vw;
 	aspect-ratio: 1;
@@ -75,12 +76,12 @@ body {
 
 .info > * {
 	width: 100%;
-	margin-bottom: 4px;
 }
 
 #title,
 #artist {
 	height: 24px;
+	line-height: 24px;
 
 	color: #FFFFFF;
 	font-weight: bold;
@@ -124,7 +125,6 @@ body {
 	pointer-events: auto;
 }
 
-
 .btn#sptf {
 	background-color: var(--color-sptf);
 	background-image: url("/services/spotify.png");
@@ -150,7 +150,7 @@ body {
 }
 
 .btn#aplm:not([disabled]) {
-	background-position: 47.5% 45%;
+	background-position: 50% 45%;
 }
 
 /*--------------------------------------------------*/
@@ -299,10 +299,11 @@ body {
 	}
 }
 
+/* side cover */
 @media screen
   and (orientation: landscape)
   and (min-width: 740px)
-  and (min-height: 390px)
+  and (min-height: 250px)
   and (max-height: 740px) {
 
 	body {
@@ -320,18 +321,31 @@ body {
 
 		height: 100%;
 
-		padding: 0 calc(50% - 350px);
-	}
+		padding: 20px;
 
-	.cover_container {
-		margin-top: calc(50vh - 175px) !important;
+		display: flex;
+		flex-direction: column;
+		align-items: right;
+		justify-content: center;
 	}
 }
 
-@media screen and (orientation: portrait) and (max-height: 680px),
-       screen and (orientation: portrait) and (max-width: 400px),
+/* side cover */
+@media screen
+  and (orientation: landscape)
+  and (min-width: 740px)
+  and (max-height: 390px) {
+	#cover {
+		height: 100% !important;
+	}
+}
+
+/* side cover */
+@media screen and (orientation: portrait) and (max-height: 570px),
+       screen and (orientation: portrait) and (max-width: 300px),
        screen and (orientation: landscape) and (max-width: 740px),
-       screen and (orientation: landscape) and (max-height: 390px) {
+       screen and (orientation: landscape) and (max-height: 250px) {
+
 	.container {
 		padding: 0 !important;
 
@@ -352,29 +366,60 @@ body {
 		justify-content: center;
 
 		padding: 20px;
-		margin-top: 0 !important;
 	}
+}
 
-	#cover {
-		max-width: calc(100vw - 40px);
-		max-height: calc(100vh - 40px);
-	}
+@media screen and (orientation: portrait) and (max-height: 640px),
+       screen and (orientation: portrait) and (max-width: 400px),
+       screen and (orientation: landscape) and (max-width: 740px),
+       screen and (orientation: landscape) and (max-height: 300px) {
 
-	.cover_container {
+	#redirect {
 		display: none;
 	}
 }
 
-@media screen and (orientation: portrait) and (max-width: 370px),
-       screen and (orientation: landscape) and (max-height: 370px) {
-	.cover_container {
+/* */
+@media screen and (orientation: portrait) and (max-height: 570px),
+	   screen and (orientation: landscape) and (max-width: 740px) {
+
+	.info {
+		width: initial;
+
+		padding: 10px;
+		border-radius: 5px;
+
+		background: rgba(0,0,0,0.35);
+		backdrop-filter: blur(10px);
+	}
+
+	.info #date {
 		display: none;
 	}
 }
 
-@media screen and (orientation: portrait) and (max-width: 300px),
-	   screen and (orientation: landscape) and (max-height: 300px) {
+/* */
+@media screen and (orientation: portrait) and (max-height: 560px),
+       screen and (orientation: portrait) and (max-width: 400px),
+       screen and (orientation: landscape) and (min-width: 740px),
+       screen and (orientation: landscape) and (max-height: 300px) {
+
+	#services {
+		scale: min(calc(min(100sh, 100vw) / 300px * .8), 1);
+/*
+		bottom: -64px;
+*/
+	}
+}
+
+@media screen and (orientation: landscape) and (max-height: 370px) {
 	.container {
-		scale: calc(min(100svh, 100svw) / 300px * .9);
+		zoom: 0.9;
+	}
+}
+
+@media screen and (orientation: landscape) and (max-height: 100px) {
+	.container {
+		zoom: 0.6;
 	}
 }
