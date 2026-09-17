@@ -131,7 +131,7 @@ async function loadLatestRelease(current) {
 			`;
 
 			card.onclick = () => {
-				pxl.redirect('/list.html');
+				pxl.redirect('/list');
 			};
 
 		// diff uuid (show latest)
@@ -142,7 +142,8 @@ async function loadLatestRelease(current) {
 
 			card.innerHTML = `
 				<div class="cover">
-					<img src="/tracks/${uuid}/watermarked.jpg" alt="">
+					<img src="/tracks/${uuid}/watermarked.jpg"
+					alt="${title} album cover">
 				</div>
 				<div class="text">
 					<div class="title">${title}</div>
@@ -151,7 +152,7 @@ async function loadLatestRelease(current) {
 			`;
 
 			card.onclick = () => {
-				pxl.redirect(`/?uuid=${uuid}`);
+				pxl.redirect(`/tracks/${uuid}/`);
 			};
 		}
 
@@ -196,8 +197,6 @@ function expandElement (btn) {
 
 // Main
 (async () => {
-	const params = getQueryParams();
-
 	const cover = document.getElementById('cover');
 	const back = document.getElementById('background');
 	const serv = document.getElementById('services');
@@ -214,14 +213,19 @@ function expandElement (btn) {
 		artist.textContent = '404';
 	}
 
+	// resolve
+	const params = getQueryParams();
+	const match = window.location.pathname.match(/^\/tracks\/([A-Za-z0-9]{6})(?:\/.*)?$/);
+	const uuid = params.uuid ?? match?.[1];
+
 	// cant find uuid
-	if (! params.uuid) {
+	if (! uuid) {
 		show404();
 		return;
 	}
 
 	// Set cover and background
-	fetch(`tracks/${params.uuid}/watermarked.jpg`)
+	fetch(`/tracks/${uuid}/watermarked.jpg`)
 	.then(res => {
 		if (! res.ok) throw new Error('Not found');
 		return res.blob();
@@ -238,7 +242,7 @@ function expandElement (btn) {
 	});
 
 	// Set metadata and services
-	fetchTrackData(params.uuid)
+	fetchTrackData(uuid)
 	.then(meta => {
 		loadLatestRelease(meta.track.uuid);
 
@@ -246,6 +250,9 @@ function expandElement (btn) {
 		title.textContent  = meta.track.title  || 'Unknown Title';
 		artist.textContent = meta.track.artist || 'Genome36';
 		date.textContent = releaseDate(meta.track.released);
+
+		// set cover alt desc
+		cover.setAttribute('alt', `${meta.track.title} album cover`);
 
 		// set page title
 		document.title = meta.track.title  || 'Unknown Title';

@@ -45,13 +45,16 @@ fetch(CSV_URL)
 
 		tracks.forEach(track => {
 			const a = document.createElement("a");
+			const src = `/tracks/${track["uuid"]}/`;
 
 			a.id = track["uuid"];
 			a.className = "track link";
+			a.src = src;
 
-			a.onclick = () => {
-				pxl.redirect(`/?uuid=${track["uuid"]}`);
-			};
+			a.addEventListener('click', (event) => {
+				event.preventDefault();
+				pxl.redirect(src);
+			});
 
 			const coverPath = `/tracks/${track["uuid"]}/watermarked.jpg`;
 
