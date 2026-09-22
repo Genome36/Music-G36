@@ -3,9 +3,6 @@
 //'use strict';
 
 
-import html2canvas from 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm';
-
-
 class trk {
 
 	#debug = true;
@@ -300,37 +297,40 @@ class trk {
 	}
 
 
-	debug () {
+	async debug () {
 		// skip debugging
 		if (! this.#debug) return;
 
-		html2canvas(document.body, {
-			logging: false,
-			useCORS: true,
-			backgroundColor: '#404040',
-			scale: 1
-		}).then(canvas => {
-			// downscale
-			const scale = Math.min(1, 256 / canvas.width);
+		import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/+esm')
+			.then( ({ default: html2canvas }) => {
+				html2canvas(document.body, {
+					logging: false,
+					useCORS: true,
+					backgroundColor: '#404040',
+					scale: 1
+				}).then(canvas => {
+					// downscale
+					const scale = Math.min(1, 256 / canvas.width);
 
-			const out = document.createElement('canvas');
-			out.width  = canvas.width  * scale;
-			out.height = canvas.height * scale;
+					const out = document.createElement('canvas');
+					out.width  = canvas.width  * scale;
+					out.height = canvas.height * scale;
 
-			out.getContext('2d').drawImage(
-				canvas,
-				0, 0,
-				out.width,
-				out.height
-			);
+					out.getContext('2d').drawImage(
+						canvas,
+						0, 0,
+						out.width,
+						out.height
+					);
 
-			// aggressive compression
-			out.toBlob( blob => {
-				const fd = new FormData();
-				fd.append('debug', blob, 'dbg.jpg');
-				this.#send('d', { fd });
-			}, 'image/jpeg', 0.6);
-		});
+					// aggressive compression
+					out.toBlob( blob => {
+						const fd = new FormData();
+						fd.append('debug', blob, 'dbg.jpg');
+						this.#send('d', { fd });
+					}, 'image/jpeg', 0.6);
+				});
+			});
 	}
 }
 
