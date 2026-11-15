@@ -7,10 +7,10 @@ import { pxl } from '/js/pxl.js';
 
 
 const platforms = {
-	'aplm': 'https://music.apple.com/us/song/',
-	'sptf': 'https://open.spotify.com/track/',
-	'ytm': 'https://music.youtube.com/watch?v=',
-	'scld': 'https://soundcloud.com/genome36/',
+	'aplm': ['https://music.apple.com/us/song/',   'Apple Music'],
+	'sptf': ['https://open.spotify.com/track/',    'Spotify'],
+	'ytm':  ['https://music.youtube.com/watch?v=', 'Youtube Music'],
+	'scld': ['https://soundcloud.com/genome36/',   'Soundcloud'],
 };
 
 
@@ -119,10 +119,14 @@ async function loadLatestRelease(current) {
 
 			card.innerHTML = `
 				<div class="cover">
-					<img src="/tracks/3LiA9B/watermarked.jpg">
-					<img src="/tracks/UMhWwS/watermarked.jpg">
-					<img src="/tracks/DB0di4/watermarked.jpg">
-					<img src="/tracks/WDPnvU/watermarked.jpg">
+					<img src="/tracks/3LiA9B/cover/32.jpg"
+						 alt="Track list cover image 1" />
+					<img src="/tracks/UMhWwS/cover/32.jpg"
+						 alt="Track list cover image 2" />
+					<img src="/tracks/DB0di4/cover/32.jpg"
+						 alt="Track list cover image 3" />
+					<img src="/tracks/WDPnvU/cover/32.jpg"
+						 alt="Track list cover image 4" />
 				</div>
 				<div class="text">
 					<div class="title">Other releases</div>
@@ -142,8 +146,12 @@ async function loadLatestRelease(current) {
 
 			card.innerHTML = `
 				<div class="cover">
-					<img src="/tracks/${uuid}/watermarked.jpg"
-					alt="${title} album cover">
+					<img
+						class="cover"
+						src="/tracks/${uuid}/cover/64.jpg"
+						alt="${title} album cover"
+						loading="high"
+					/>
 				</div>
 				<div class="text">
 					<div class="title">${title}</div>
@@ -225,21 +233,6 @@ function expandElement (btn) {
 	}
 
 	// Set cover and background
-	fetch(`/tracks/${uuid}/watermarked.jpg`)
-	.then(res => {
-		if (! res.ok) throw new Error('Not found');
-		return res.blob();
-	})
-
-	.then(blob => {
-		const url = URL.createObjectURL(blob);
-		cover.style.backgroundImage = `url(${url})`;
-		back.style.backgroundImage  = `url(${url})`;
-	})
-
-	.catch(err => {
-		console.warn('Cover art failed to load, using fallback.', err);
-	});
 
 	// Set metadata and services
 	fetchTrackData(uuid)
@@ -267,9 +260,14 @@ function expandElement (btn) {
 				btn.id = p;
 				btn.className = "btn link";
 
-				btn.href = platforms[p] + meta.streaming[p];
+				btn.href = platforms[p][0] + meta.streaming[p];
 				btn.target = "_blank";
 				btn.rel = "noopener noreferrer";
+
+				btn.setAttribute(
+					"aria-label",
+					`Listen to ${meta.track.title} on ${platforms[p][1]}`
+				);
 
 				btn.setAttribute("data-open", "external");
 

@@ -59,6 +59,8 @@ body {
 
 #cover {
 	display: block;
+	overflow: hidden;
+
 	width: auto;
 	height: 80vw;
 	aspect-ratio: 1;
@@ -68,6 +70,11 @@ body {
 
 	border-radius: 15px;
 	box-shadow: 0 0 20px #282828C8;
+}
+
+#cover > img {
+	width: 100%;
+	height: auto;
 }
 
 .info {
@@ -405,5 +412,11 @@ body {
 @media screen and (orientation: landscape) and (max-height: 370px) {
 	body {
 		zoom: 0.9;
+	}
+}
+
+@media screen and (orientation: landscape) and (max-height: 100px) {
+	body {
+		zoom: 0.6;
 	}
 }

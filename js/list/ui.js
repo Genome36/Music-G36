@@ -56,7 +56,7 @@ fetch(CSV_URL)
 				pxl.redirect(src);
 			});
 
-			const coverPath = `/tracks/${track["uuid"]}/watermarked.jpg`;
+			const coverPath = `/tracks/${track["uuid"]}/cover/256.jpg`;
 
 			let title = track.title;
 			if (["lb9x1S", "poGKhK", "WfXbGy"].indexOf(track.uuid) > -1) {
